@@ -1,0 +1,20 @@
+[package]
+name = "scrapr"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# pyo3 = { version = "0.25.1", features = ["extension-module"] }
+
+
+[lib]
+name = "scrapr"
+crate-type = ["cdylib"]
+
+
+[package.metadata.maturin]
+name = "scrapr"
+
+[dependencies.pyo3]
+version = "0.25"
+features = ["auto-initialize", "macros"] # "test"]

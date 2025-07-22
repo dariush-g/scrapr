@@ -1,0 +1,10 @@
+[build-system]
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "scrapr"
+version = "0.1.0"
+authors = [{ name = "Dariush Ghassemieh", email = "dariush@ghassemieh.com" }]
+description = "A fast Rust-based web scraping library for Python"
+requires-python = ">=3.7"
