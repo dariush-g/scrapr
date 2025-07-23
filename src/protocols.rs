@@ -1,10 +1,10 @@
+use crate::request::*;
+use native_tls::TlsConnector;
+use pyo3::prelude::*;
 use std::{
     io::{Read, Write},
     net::TcpStream,
 };
-
-use native_tls::TlsConnector;
-use pyo3::prelude::*;
 
 #[pyfunction]
 pub fn fetch_http(host: &str, path: &str) -> PyResult<String> {
@@ -21,6 +21,34 @@ pub fn fetch_http(host: &str, path: &str) -> PyResult<String> {
     if let Some(body) = response.split("\r\n\r\n").nth(1) {
         // print!("{body}");
 
+        Ok(body.to_string())
+    } else {
+        Err(PyErr::new::<pyo3::exceptions::PyException, _>(
+            "No body found",
+        ))
+    }
+}
+
+#[pyfunction]
+pub fn fetch_http_with_options(
+    host: &str,
+    path: &str,
+    options: RequestOptions,
+) -> PyResult<String> {
+    let mut stream = TcpStream::connect((host, 80))
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let url = build_url("", path, &options.query);
+    let headers = format_headers(host, &options);
+
+    let request = format!("GET {} HTTP/1.1\r\n{}\r\n\r\n", url, headers);
+
+    stream.write_all(request.as_bytes()).unwrap();
+
+    let mut response = String::new();
+    stream.read_to_string(&mut response).unwrap();
+
+    if let Some(body) = response.split("\r\n\r\n").nth(1) {
         Ok(body.to_string())
     } else {
         Err(PyErr::new::<pyo3::exceptions::PyException, _>(
@@ -151,6 +179,40 @@ pub fn fetch_https(host: &str, path: &str) -> PyResult<String> {
     stream
         .read_to_string(&mut response)
         .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    if let Some(body) = response.split("\r\n\r\n").nth(1) {
+        Ok(body.to_string())
+    } else {
+        Err(PyErr::new::<pyo3::exceptions::PyException, _>(
+            "No body found",
+        ))
+    }
+}
+
+#[pyfunction]
+pub fn fetch_https_with_options(
+    host: &str,
+    path: &str,
+    options: RequestOptions,
+) -> PyResult<String> {
+    let stream = TcpStream::connect((host, 443))
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let connector = TlsConnector::new()
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+    let mut stream = connector
+        .connect(host, stream)
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let url = build_url("", path, &options.query);
+    let headers = format_headers(host, &options);
+
+    let request = format!("GET {} HTTP/1.1\r\n{}\r\n\r\n", url, headers);
+
+    stream.write_all(request.as_bytes()).unwrap();
+
+    let mut response = String::new();
+    stream.read_to_string(&mut response).unwrap();
 
     if let Some(body) = response.split("\r\n\r\n").nth(1) {
         Ok(body.to_string())

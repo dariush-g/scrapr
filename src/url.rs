@@ -1,8 +1,11 @@
+use pyo3::exceptions::PyException;
 use pyo3::{PyErr, PyResult, pyfunction};
 
 use native_tls::TlsConnector;
 use std::io::{Read, Write};
 use std::net::TcpStream;
+
+use crate::request::{RequestOptions, build_url, format_headers};
 
 // use crate::protocols::{fetch_http_, fetch_https_};
 
@@ -117,5 +120,53 @@ pub fn fetch_url(url: &str) -> PyResult<String> {
         Err(PyErr::new::<pyo3::exceptions::PyException, _>(
             "No body found",
         ))
+    }
+}
+
+#[pyfunction]
+pub fn fetch_url_with_options(url: &str, opts: RequestOptions) -> PyResult<String> {
+    let parsed = ParsedUrl::parse_url(url).map_err(|e| PyErr::new::<PyException, _>(e))?;
+
+    let full_url = build_url("", &parsed.path, &opts.query);
+
+    let headers = format_headers(&parsed.host, &opts);
+    let request = format!("GET {full_url} HTTP/1.1\r\n{headers}\r\n\r\n");
+
+    let mut response = String::new();
+
+    match parsed.scheme {
+        "https" => {
+            let connector =
+                TlsConnector::new().map_err(|e| PyErr::new::<PyException, _>(e.to_string()))?;
+
+            let stream = TcpStream::connect((parsed.host, parsed.port))
+                .map_err(|e| PyErr::new::<PyException, _>(e.to_string()))?;
+
+            let mut tls_stream = connector
+                .connect(parsed.host, stream)
+                .map_err(|e| PyErr::new::<PyException, _>(e.to_string()))?;
+
+            tls_stream.write_all(request.as_bytes()).unwrap();
+            tls_stream.read_to_string(&mut response).unwrap();
+        }
+        "http" => {
+            let mut stream = TcpStream::connect((parsed.host, parsed.port))
+                .map_err(|e| PyErr::new::<PyException, _>(e.to_string()))?;
+
+            stream.write_all(request.as_bytes()).unwrap();
+            stream.read_to_string(&mut response).unwrap();
+        }
+        _ => {
+            return Err(PyErr::new::<PyException, _>(format!(
+                "Unsupported scheme: {}",
+                parsed.scheme
+            )));
+        }
+    }
+
+    if let Some(body) = response.split("\r\n\r\n").nth(1) {
+        Ok(body.to_string())
+    } else {
+        Err(PyErr::new::<PyException, _>("No body found"))
     }
 }
