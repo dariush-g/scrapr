@@ -3,9 +3,11 @@ use std::{
     net::TcpStream,
 };
 
+use native_tls::TlsConnector;
 use pyo3::prelude::*;
 
-pub fn fetch_http_(host: &str, path: &str) -> PyResult<String> {
+#[pyfunction]
+pub fn fetch_http(host: &str, path: &str) -> PyResult<String> {
     let mut stream = TcpStream::connect((host, 80))
         .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
 
@@ -27,7 +29,8 @@ pub fn fetch_http_(host: &str, path: &str) -> PyResult<String> {
     }
 }
 
-pub fn extract_attribute_(text: &str, tag: &str, attr: &str) -> PyResult<Vec<String>> {
+#[pyfunction]
+pub fn extract_attribute(text: &str, tag: &str, attr: &str) -> PyResult<Vec<String>> {
     let mut results = Vec::new();
     let open_tag = format!("<{tag}");
     let attr_eq = format!("{attr}=\"");
@@ -50,8 +53,9 @@ pub fn extract_attribute_(text: &str, tag: &str, attr: &str) -> PyResult<Vec<Str
     Ok(results)
 }
 
-pub fn extract_links_(text: &str) -> PyResult<Vec<String>> {
-    extract_attribute_(text, "a", "href")
+#[pyfunction]
+pub fn extract_links(text: &str) -> PyResult<Vec<String>> {
+    extract_attribute(text, "a", "href")
 }
 
 // pub fn fetch_http_(host: &str, path: &str) -> PyResult<String> {
@@ -85,7 +89,8 @@ pub fn extract_links_(text: &str) -> PyResult<Vec<String>> {
 //     }
 // }
 
-pub fn extract_tag_(text: &str, tag: &str) -> PyResult<Vec<String>> {
+#[pyfunction]
+pub fn extract_tag(text: &str, tag: &str) -> PyResult<Vec<String>> {
     let open = format!("<{tag}>");
     let close = format!("</{tag}>");
     let mut results = Vec::new();
@@ -111,14 +116,59 @@ mod tests {
 
     #[test]
     fn test_simple_request_() {
-        let body = fetch_http_("example.com", "/").unwrap();
+        let body = fetch_http("example.com", "/").unwrap();
         assert!(body.contains("Example Domain"));
     }
 
     #[test]
     fn test_extract_tag_() {
         let html = "<p>Hello</p><div>skip</div><p>World</p>";
-        let result = extract_tag_(html, "p").unwrap();
+        let result = extract_tag(html, "p").unwrap();
         assert_eq!(result, vec!["Hello", "World"]);
+    }
+}
+
+#[pyfunction]
+pub fn fetch_https(host: &str, path: &str) -> PyResult<String> {
+    let addr = (host, 443);
+    let tcp = TcpStream::connect(addr)
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let connector = TlsConnector::new()
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let mut stream = connector
+        .connect(host, tcp)
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let request = format!("GET {path} HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n");
+    stream
+        .write_all(request.as_bytes())
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    let mut response = String::new();
+
+    stream
+        .read_to_string(&mut response)
+        .map_err(|e| PyErr::new::<pyo3::exceptions::PyException, _>(e.to_string()))?;
+
+    if let Some(body) = response.split("\r\n\r\n").nth(1) {
+        Ok(body.to_string())
+    } else {
+        Err(PyErr::new::<pyo3::exceptions::PyException, _>(
+            "No body found",
+        ))
+    }
+}
+
+#[cfg(test)]
+mod test {
+
+    #[test]
+    fn test_fetch_https_() {
+        if let Ok(text) = crate::protocols::fetch_https("example.com", "/") {
+            let e_d = crate::protocols::extract_tag(&text, "title").unwrap();
+            assert_eq!(e_d, vec!["Example Domain"]);
+        }
     }
 }
