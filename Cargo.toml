@@ -17,4 +17,4 @@ name = "scrapr"
 
 [dependencies.pyo3]
 version = "0.25"
-features = ["auto-initialize", "macros"] # "test"]
+features = ["auto-initialize",  "extension-module"] # "test"]
