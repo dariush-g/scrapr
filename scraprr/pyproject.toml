@@ -5,7 +5,7 @@ build-backend = "maturin"
 
 [project]
 name = "scraprr"
-version = "0.1.10"
+version = "0.1.12"
 authors = [{ name = "Dariush Ghassemieh", email = "dariush@ghassemieh.com" }]
 description = "a Rust-based web scraping library for Python"
 requires-python = ">=3.7"
