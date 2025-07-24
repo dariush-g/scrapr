@@ -12,8 +12,9 @@ keywords = ["scraping", "html", "parser", "web"]
 
 
 [dependencies]
+anyhow.workspace = true
 native-tls = { workspace = true }
-anyhow = { workspace = true }
+
 
 [lib]
 name = "scrapr_core"
