@@ -321,15 +321,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "scrapr"
-version = "0.1.0"
-dependencies = [
- "pyo3",
- "scrapr-bindings",
- "scrapr-core",
-]
-
-[[package]]
 name = "scrapr-bindings"
 version = "0.1.0"
 dependencies = [
@@ -344,6 +335,15 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "native-tls",
+]
+
+[[package]]
+name = "scraprr"
+version = "0.1.0"
+dependencies = [
+ "pyo3",
+ "scrapr-bindings",
+ "scrapr-core",
 ]
 
 [[package]]

@@ -1,6 +1,6 @@
-# scrapr
+# scrapr-rs
 
-**scrapr** is a library for scraping HTML from the web.
+**scrapr-rs** is a library for scraping HTML from the web.
 
 ---
 
@@ -51,7 +51,7 @@ fn main() {
 ```
 
 ```python
-import scrapr
+import scrapr_rs
 
 opts = scrapr.RequestOptions(
     headers={"User-Agent": "XYZ/1.0"},

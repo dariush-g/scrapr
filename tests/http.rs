@@ -1,4 +1,4 @@
-use scrapr::prelude::*;
+use scraprr::prelude::*;
 
 #[test]
 fn test_simple_request_() {

@@ -1,6 +1,6 @@
-import scrapr
+import scraprr
 
-html = scrapr.fetch_https("https://www.wikipedia.org/", "/")
+html = scraprr.fetch_https("https://www.wikipedia.org/", "/")
 
 print(html)
 

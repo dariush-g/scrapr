@@ -8,7 +8,7 @@ use pyo3::prelude::*;
 use scrapr_bindings::prelude::*;
 
 #[pymodule]
-pub fn scrapr(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn scraprr(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(fetch_http, m)?)?;
     m.add_function(wrap_pyfunction!(extract_tag, m)?)?;
     m.add_function(wrap_pyfunction!(extract_attribute, m)?)?;

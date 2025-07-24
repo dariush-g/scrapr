@@ -1,5 +1,5 @@
 [package]
-name = "scrapr"
+name = "scraprr"
 version = "0.1.0"
 edition = "2024"
 
@@ -10,6 +10,6 @@ pyo3 = { version = "0.25.1", features = ["extension-module"] }
 
 
 [lib]
-name = "scrapr"
+name = "scraprr"
 crate-type = ["rlib", "cdylib"]
 path = "src/lib.rs"

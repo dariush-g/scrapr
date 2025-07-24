@@ -1,6 +1,6 @@
-# scrapr
+# scraprr
 
-**scrapr** is a library for scraping HTML from the web.
+**scraprr** is a library for scraping HTML from the web.
 
 ---
 
@@ -15,7 +15,7 @@
 ## Examples
 
 ```rust
-use scrapr::{fetch_url, fetch_url_with_options, RequestOptions, extract_tag};
+use scraprr::{fetch_url, fetch_url_with_options, RequestOptions, extract_tag};
 
 fn main() {
     // Basic GET request
@@ -51,15 +51,15 @@ fn main() {
 ```
 
 ```python
-import scrapr
+import scraprr
 
-opts = scrapr.RequestOptions(
+opts = scraprr.RequestOptions(
     headers={"User-Agent": "XYZ/1.0"},
     cookies={"sessionid": "abc123"},
     query={"q": "Shrek"}
 )
 
-text = scrapr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
+text = scraprr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
 
 print(text)
 ```

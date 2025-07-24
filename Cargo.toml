@@ -1,7 +1,8 @@
 [workspace]
-members = ["scrapr", "scrapr-bindings", "scrapr-core"]
+members = ["scraprr", "scrapr-bindings", "scrapr-core"]
 
 [workspace.dependencies]
 native-tls = "0.2.14"
 anyhow = { version = "*" }
 pyo3 = { version = "0.25.1", features = ["extension-module"] }
+
