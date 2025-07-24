@@ -68,8 +68,13 @@ print(text)
 
 ## MacOS arm64
 ```bash
+pip install scraprr
+```
+### or
+```bash
 curl -sSL https://raw.githubusercontent.com/dariush-g/scraprr/main/install_scraprr.sh | bash
 ```
+
 
 ## Linux 
 ```
