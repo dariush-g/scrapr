@@ -1,4 +1,4 @@
-use scraprr::{extract_tag, fetch_https};
+use scraprr::prelude::*;
 
 #[test]
 fn test_fetch_https_() {

@@ -1,4 +1,4 @@
-use scraprr::{extract_tag, fetch_url};
+use scraprr::prelude::*;
 
 #[test]
 fn test_fetch_url() {

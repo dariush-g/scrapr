@@ -358,7 +358,7 @@ dependencies = [
 
 [[package]]
 name = "scraprr"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "pyo3",
  "scrapr-bindings 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
