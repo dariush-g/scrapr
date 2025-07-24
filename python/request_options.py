@@ -10,9 +10,8 @@ html = scrapr.fetch_http_with_options("example.com", "/", opts)
 # print(html)
 
 
-
 opts = scrapr.RequestOptions(
-    headers={"User-Agent": "MyScraper/1.0"},
+    headers={"User-Agent": "XYZ/1.0"},
     cookies={"sessionid": "abc123"},
     query={"q": "tls"}
 )

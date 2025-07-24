@@ -1,15 +1,14 @@
-pub mod protocols;
-pub mod request;
-pub mod url;
+pub mod prelude {
+    pub use scrapr_core::prelude::*;
+}
+
+extern crate scrapr_bindings;
 
 use pyo3::prelude::*;
-
-use crate::protocols::*;
-use crate::request::*;
-use crate::url::*;
+use scrapr_bindings::prelude::*;
 
 #[pymodule]
-fn scrapr(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn scrapr(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(fetch_http, m)?)?;
     m.add_function(wrap_pyfunction!(extract_tag, m)?)?;
     m.add_function(wrap_pyfunction!(extract_attribute, m)?)?;

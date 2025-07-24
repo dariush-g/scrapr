@@ -3,6 +3,12 @@
 version = 4
 
 [[package]]
+name = "anyhow"
+version = "1.0.98"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
+
+[[package]]
 name = "autocfg"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -318,8 +324,26 @@ dependencies = [
 name = "scrapr"
 version = "0.1.0"
 dependencies = [
+ "pyo3",
+ "scrapr-bindings",
+ "scrapr-core",
+]
+
+[[package]]
+name = "scrapr-bindings"
+version = "0.1.0"
+dependencies = [
  "native-tls",
  "pyo3",
+ "scrapr-core",
+]
+
+[[package]]
+name = "scrapr-core"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "native-tls",
 ]
 
 [[package]]

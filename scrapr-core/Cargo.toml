@@ -1,0 +1,14 @@
+[package]
+name = "scrapr-core"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+native-tls = { workspace = true }
+anyhow = { workspace = true }
+
+[lib]
+name = "scrapr_core"
+path = "src/lib.rs"
+crate-type = ["rlib"]

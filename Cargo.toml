@@ -1,21 +1,7 @@
-[package]
-name = "scrapr"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = ["scrapr", "scrapr-bindings", "scrapr-core"]
 
-[dependencies]
+[workspace.dependencies]
 native-tls = "0.2.14"
-# pyo3 = { version = "0.25.1", features = ["extension-module"] }
-
-
-[lib]
-name = "scrapr"
-crate-type = ["cdylib"]
-
-
-[package.metadata.maturin]
-name = "scrapr"
-
-[dependencies.pyo3]
-version = "0.25"
-features = ["auto-initialize",  "extension-module"] # "test"]
+anyhow = { version = "*" }
+pyo3 = { version = "0.25.1", features = ["extension-module"] }

@@ -138,23 +138,6 @@ pub fn extract_tag(text: &str, tag: &str) -> PyResult<Vec<String>> {
     Ok(results)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_simple_request_() {
-        let body = fetch_http("example.com", "/").unwrap();
-        assert!(body.contains("Example Domain"));
-    }
-
-    #[test]
-    fn test_extract_tag_() {
-        let html = "<p>Hello</p><div>skip</div><p>World</p>";
-        let result = extract_tag(html, "p").unwrap();
-        assert_eq!(result, vec!["Hello", "World"]);
-    }
-}
 
 #[pyfunction]
 pub fn fetch_https(host: &str, path: &str) -> PyResult<String> {
@@ -220,17 +203,5 @@ pub fn fetch_https_with_options(
         Err(PyErr::new::<pyo3::exceptions::PyException, _>(
             "No body found",
         ))
-    }
-}
-
-#[cfg(test)]
-mod test {
-
-    #[test]
-    fn test_fetch_https_() {
-        if let Ok(text) = crate::protocols::fetch_https("example.com", "/") {
-            let e_d = crate::protocols::extract_tag(&text, "title").unwrap();
-            assert_eq!(e_d, vec!["Example Domain"]);
-        }
     }
 }

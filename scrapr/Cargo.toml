@@ -1,0 +1,15 @@
+[package]
+name = "scrapr"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+scrapr-bindings = { path = "../scrapr-bindings" }
+scrapr-core = { path = "../scrapr-core" }
+pyo3 = { version = "0.25.1", features = ["extension-module"] }
+
+
+[lib]
+name = "scrapr"
+crate-type = ["rlib", "cdylib"]
+path = "src/lib.rs"

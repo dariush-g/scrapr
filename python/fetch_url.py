@@ -13,6 +13,6 @@ opts = scrapr.RequestOptions(
     query={"q": "Shrek"}
 )
 
-text = scrapr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
-
-print(text)
+text = scrapr.fetch_url_with_options("https://openai.com/", opts)
+title = scrapr.extract_tag(text, "title")
+print(title)
