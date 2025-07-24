@@ -13,8 +13,8 @@ categories = ["web-programming", "parsing"]
 keywords = ["scraping", "html", "parser", "web"]
 
 [dependencies]
-scrapr-bindings = { path = "../scrapr-bindings" }
-scrapr-core = { path = "../scrapr-core" }
+scrapr-bindings = "0.1.0"
+scrapr-core = "0.1.0"
 pyo3 = { version = "0.25.1", features = ["extension-module"] }
 
 

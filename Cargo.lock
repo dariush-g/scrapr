@@ -329,8 +329,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "scrapr-bindings"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84fc9886eb3465a9dc9bdec5f51600ec68ed07db4fd6b936d9f873826ca163f7"
+dependencies = [
+ "native-tls",
+ "pyo3",
+]
+
+[[package]]
 name = "scrapr-core"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "native-tls",
+]
+
+[[package]]
+name = "scrapr-core"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "38dd4ac6068aedbdc837b6aeb011631817a3b918b341dbee09024e753fc3f842"
 dependencies = [
  "anyhow",
  "native-tls",
@@ -341,8 +361,8 @@ name = "scraprr"
 version = "0.1.0"
 dependencies = [
  "pyo3",
- "scrapr-bindings",
- "scrapr-core",
+ "scrapr-bindings 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "scrapr-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
