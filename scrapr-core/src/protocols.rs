@@ -71,17 +71,33 @@ pub fn extract_links(text: &str) -> Result<Vec<String>> {
 }
 
 pub fn extract_tag(text: &str, tag: &str) -> Result<Vec<String>> {
-    let open = format!("<{tag}>");
-    let close = format!("</{tag}>");
     let mut results = Vec::new();
+    let tag_lower = tag.to_lowercase();
 
     let mut start = 0;
-    while let Some(open_idx) = text[start..].find(&open) {
-        let start_idx = start + open_idx + open.len();
-        if let Some(close_idx) = text[start_idx..].find(&close) {
-            let end_idx = start_idx + close_idx;
-            results.push(text[start_idx..end_idx].trim().to_string());
-            start = end_idx + close.len();
+    while let Some(open_pos) = text[start..].find('<') {
+        let open_tag_start = start + open_pos;
+        if let Some(open_tag_end) = text[open_tag_start..].find('>') {
+            let tag_content_start = open_tag_start + open_tag_end + 1;
+
+            let open_tag_full = &text[open_tag_start + 1..open_tag_start + open_tag_end];
+            let tag_name = open_tag_full
+                .split_whitespace()
+                .next()
+                .unwrap_or("")
+                .to_lowercase();
+
+            if tag_name == tag_lower {
+                let close_tag = format!("</{tag}>", tag = tag);
+                if let Some(close_pos) = text[tag_content_start..].to_lowercase().find(&close_tag) {
+                    let content = &text[tag_content_start..tag_content_start + close_pos];
+                    results.push(content.trim().to_string());
+                    start = tag_content_start + close_pos + close_tag.len();
+                    continue;
+                }
+            }
+
+            start = open_tag_start + 1;
         } else {
             break;
         }
