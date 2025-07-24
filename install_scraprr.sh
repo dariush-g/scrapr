@@ -2,13 +2,12 @@
 
 set -e
 
-WHEEL_PATH=$(ls ./target/wheels/scraprr-0.1.12-*.whl 2>/dev/null | head -n 1)
+VERSION="0.1.12"
+WHEEL="scraprr-${VERSION}-cp313-cp313-macosx_11_0_arm64.whl"
+URL="https://github.com/dariush-g/scraprr/releases/download/v${VERSION}/${WHEEL}"
 
-if [[ -z "$WHEEL_PATH" ]]; then
-    echo "❌ scraprr wheel not found in target/wheels/"
-    exit 1
-fi
+echo "⬇️ Downloading wheel from GitHub Releases..."
+curl -LO "$URL"
 
-
-echo "📦 Installing $WHEEL_PATH..."
-pip install "$WHEEL_PATH"
+echo "📦 Installing scraprr..."
+pip install "$WHEEL"
