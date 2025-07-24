@@ -1,5 +1,6 @@
 [workspace]
 members = ["scraprr", "scrapr-bindings", "scrapr-core"]
+resolver = "3"
 
 [workspace.dependencies]
 native-tls = "0.2.14"

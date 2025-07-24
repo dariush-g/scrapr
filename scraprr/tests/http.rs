@@ -1,4 +1,4 @@
-use scraprr::prelude::*;
+use scraprr::{extract_tag, fetch_http};
 
 #[test]
 fn test_simple_request_() {

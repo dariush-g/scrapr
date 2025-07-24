@@ -2,6 +2,13 @@
 name = "scrapr-core"
 version = "0.1.0"
 edition = "2024"
+authors = ["Dariush Ghassemieh <dariush@ghassemieh.com>"]
+license = "MIT"
+repository = "https://github.com/dariush-g/scraprr"
+homepage = "https://github.com/dariush-g/scraprr"
+documentation = "https://docs.rs/scraprr-core"
+categories = ["web-programming", "parsing"]
+keywords = ["scraping", "html", "parser", "web"]
 
 
 [dependencies]

@@ -6,6 +6,16 @@ use std::{
     net::TcpStream,
 };
 
+/// Fetch a page over plain HTTP.
+///
+/// # Arguments
+///
+/// * `host` - The domain name of the server.
+/// * `path` - The path to fetch (e.g., "/index.html").
+///
+/// # Returns
+///
+/// Body of the HTTP response if successful.
 pub fn fetch_http(host: &str, path: &str) -> Result<String> {
     let mut stream =
         TcpStream::connect((host, 80)).map_err(|e| anyhow!("Failed to connect: {e}"))?;
@@ -23,6 +33,7 @@ pub fn fetch_http(host: &str, path: &str) -> Result<String> {
         .ok_or_else(|| anyhow!("No body found"))
 }
 
+/// Same as `fetch_http`, but with additional headers and query support.
 pub fn fetch_http_with_options(host: &str, path: &str, options: RequestOptions) -> Result<String> {
     let mut stream = TcpStream::connect((host, 80))?;
 
@@ -42,6 +53,7 @@ pub fn fetch_http_with_options(host: &str, path: &str, options: RequestOptions) 
         .ok_or_else(|| anyhow!("No body found"))
 }
 
+/// Extracts the values of a given attribute from all occurrences of a tag.
 pub fn extract_attribute(text: &str, tag: &str, attr: &str) -> Result<Vec<String>> {
     let mut results = Vec::new();
     let open_tag = format!("<{tag}");
@@ -66,10 +78,12 @@ pub fn extract_attribute(text: &str, tag: &str, attr: &str) -> Result<Vec<String
     Ok(results)
 }
 
+/// Extract all href links from <a> tags.
 pub fn extract_links(text: &str) -> Result<Vec<String>> {
     extract_attribute(text, "a", "href")
 }
 
+/// Extract inner content of all tags named `tag`.
 pub fn extract_tag(text: &str, tag: &str) -> Result<Vec<String>> {
     let mut results = Vec::new();
     let tag_lower = tag.to_lowercase();
@@ -106,6 +120,7 @@ pub fn extract_tag(text: &str, tag: &str) -> Result<Vec<String>> {
     Ok(results)
 }
 
+/// Fetch a page over HTTPS with default headers.
 pub fn fetch_https(host: &str, path: &str) -> Result<String> {
     let tcp = TcpStream::connect((host, 443)).map_err(|e| anyhow!("TLS connect failed: {e}"))?;
 
@@ -125,6 +140,7 @@ pub fn fetch_https(host: &str, path: &str) -> Result<String> {
         .ok_or_else(|| anyhow!("No body found"))
 }
 
+/// Same as `fetch_https`, but with custom headers and query support.
 pub fn fetch_https_with_options(host: &str, path: &str, options: RequestOptions) -> Result<String> {
     let tcp = TcpStream::connect((host, 443))?;
     let connector = TlsConnector::new()?;

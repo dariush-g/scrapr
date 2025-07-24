@@ -1,4 +1,4 @@
-use scrapr::prelude::*;
+use scraprr::*;
 
 fn main() {
     let text = fetch_url("https://openai.com/").unwrap();
