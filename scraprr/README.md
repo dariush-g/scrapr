@@ -1,6 +1,6 @@
-# scrapr-rs
+# scraprr
 
-**scrapr-rs** is a library for scraping HTML from the web.
+**scraprr** is a library for scraping HTML from the web.
 
 ---
 
