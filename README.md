@@ -63,3 +63,16 @@ text = scraprr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
 
 print(text)
 ```
+
+## Installation:
+
+# MacOS arm64
+```bash
+curl -sSL https://raw.githubusercontent.com/dariush-g/scraprr/main/install_scraprr.sh | bash
+```
+
+# Linux 
+```
+pip install scraprr
+```
+
