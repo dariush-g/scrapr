@@ -66,14 +66,23 @@ print(text)
 
 # Installation:
 
-## MacOS arm64
-
+## Python
+### MacOS arm64
+```bash
+pip install scraprr
+```
+#### or
 ```bash
 curl -sSL https://raw.githubusercontent.com/dariush-g/scraprr/main/install_scraprr.sh | bash
 ```
 
-## Linux
 
+### Linux 
 ```
 pip install scraprr
 ```
+## Cargo / Rust
+```bash
+cargo add scraprr
+```
+
