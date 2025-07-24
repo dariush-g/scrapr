@@ -15,7 +15,7 @@
 ## Examples
 
 ```rust
-use scrapr::{fetch_url, fetch_url_with_options, RequestOptions, extract_tag};
+use scraprr::{fetch_url, fetch_url_with_options, RequestOptions, extract_tag};
 
 fn main() {
     // Basic GET request
@@ -51,15 +51,29 @@ fn main() {
 ```
 
 ```python
-import scrapr_rs
+import scraprr
 
-opts = scrapr.RequestOptions(
+opts = scraprr.RequestOptions(
     headers={"User-Agent": "XYZ/1.0"},
     cookies={"sessionid": "abc123"},
     query={"q": "Shrek"}
 )
 
-text = scrapr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
+text = scraprr.fetch_url_with_options("https://html.duckduckgo.com/html", opts)
 
 print(text)
+```
+
+# Installation:
+
+## MacOS arm64
+
+```bash
+curl -sSL https://raw.githubusercontent.com/dariush-g/scraprr/main/install_scraprr.sh | bash
+```
+
+## Linux
+
+```
+pip install scraprr
 ```
