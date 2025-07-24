@@ -25,5 +25,6 @@ pub fn scraprr(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     Ok(())
 }
-
-pub use scrapr_core::*;
+pub mod prelude {
+    pub use scrapr_core::*;
+}
