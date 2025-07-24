@@ -1,0 +1,28 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    name: Publish Python package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Maturin
+        run: pip install maturin
+
+      - name: Build and publish
+        run: maturin publish --no-sdist --skip-existing -u __token__ -p ${{ secrets.PYPI_API_TOKEN }}
