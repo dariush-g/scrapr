@@ -86,3 +86,6 @@ pip install scraprr
 cargo add scraprr
 ```
 
+### Comparison to **Requests**
+
+<img width="2964" height="1467" alt="comparison" src="https://github.com/user-attachments/assets/3f3badef-2094-46f8-b65f-3e12df391df5" />
