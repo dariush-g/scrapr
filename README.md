@@ -86,7 +86,7 @@ pip install scraprr
 cargo add scraprr
 ```
 
-
+---
 
 ### Comparison to **Requests**
 
