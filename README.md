@@ -20,7 +20,7 @@ use scraprr::{fetch_url, fetch_url_with_options, RequestOptions, extract_tag};
 fn main() {
     // Basic GET request
     let html = fetch_url("http://localhost:8000/demo.html");
-    println!("Raw HTML:\n{}", html);
+    println!("HTML:\n{}", html);
 
     // Extract the first <ul> tag and its contents
     let tag = extract_tag(&html, "ul");
